@@ -48,7 +48,6 @@ while monitor == True:
     nextPreStartTime = nextPreStartDt.strftime("%m/%d %I:%M:%S %p %Z")
     if goatData["product"]["name"] == productName:
         print("({}) No new product detected. No action taken".format(logTime))
-        lookForSoldOut = False
     else:
         print("({}) New product detected. Sending webhooks".format(logTime))
         productName = goatData["product"]["name"]
