@@ -16,7 +16,7 @@ productName = None
 lookForSoldOut = None
 webhookUrls = ["https://discordapp.com/api/webhooks/648230517749186570/l3p5giaPKzcruOO58vGK9-ji0Qzo3S2dJg7lNNh_VxmAcTci20mUQwTEfegI-mXrZM59", "https://discordapp.com/api/webhooks/649034877404184624/eTy8CNZ83MidsH9nyQvtyw94F434Xg8wQ2o_I9HY8zqvenpJ13r_EJogiuSgAg6Hw3T_"]
 goatSurpriseUrl = "https://carnival-api.goat.com/api/contest/surprise_drops"
-auth = {"authorization":'Token token="Rivt_1gMKoVk-W-aznEz"'}
+auth = {"authorization":'Token token=""'}
 from_zone = tz.gettz('UTC')
 to_zone = tz.gettz('America/New_York')
 while monitor == True:
