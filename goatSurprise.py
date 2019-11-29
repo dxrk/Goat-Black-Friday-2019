@@ -14,7 +14,7 @@ urllib3.disable_warnings()
 monitor  = True
 productName = None
 lookForSoldOut = None
-webhookUrls = ["https://discordapp.com/api/webhooks/648230517749186570/l3p5giaPKzcruOO58vGK9-ji0Qzo3S2dJg7lNNh_VxmAcTci20mUQwTEfegI-mXrZM59", "https://discordapp.com/api/webhooks/649034877404184624/eTy8CNZ83MidsH9nyQvtyw94F434Xg8wQ2o_I9HY8zqvenpJ13r_EJogiuSgAg6Hw3T_"]
+webhookUrls = [""]
 goatSurpriseUrl = "https://carnival-api.goat.com/api/contest/surprise_drops"
 auth = {"authorization":'Token token=""'}
 from_zone = tz.gettz('UTC')
@@ -47,9 +47,9 @@ while monitor == True:
     nextPreStartDt = utcNextPreStart.astimezone(to_zone)
     nextPreStartTime = nextPreStartDt.strftime("%m/%d %I:%M:%S %p %Z")
     if goatData["product"]["name"] == productName:
-        print("({}) No new product detected. No action taken".format(logTime))
+        print("({}) No new product detected. No action taken (Check OOS? = {})".format(logTime, lookForSoldOut))
     else:
-        print("({}) New product detected. Sending webhooks".format(logTime))
+        print("({}) New product detected. Sending webhooks (Check OOS? = {})".format(logTime, lookForSoldOut))
         productName = goatData["product"]["name"]
         lookForSoldOut = True
         for webhook in webhookUrls:
@@ -68,19 +68,17 @@ while monitor == True:
         if "isSoldOut" in goatData:
             if goatData["isSoldOut"] == True:
                 try:
-                    print("({}) Product sold out. Sending webhooks".format(logTime))
+                    print("({}) Product sold out. Sending webhooks. (Check OOS? = {})".format(logTime, lookForSoldOut))
                     lookForSoldOut = False
                     for webhook in webhookUrls:
-                        embed = Webhook(webhook, color=123123)
-                        embed.set_author(name='Goat Surprise Monitor', icon="https://i.imgur.com/GIOTCug.jpg")
-                        embed.set_thumbnail(url=goatData["product"]["pictureUrl"])
-                        embed.set_title(title=goatData["product"]["name"], url=productUrl)
-                        embed.set_desc("The next drop usually occurs **10 minutes** after `Next Pre Start Time`.\nNext product is announced at `Next Pre Start Time`.\nClick [this]({}) to access product from website, (**Disclaimer:** Will not work on apparel).".format(productUrl))
-                        embed.add_field(name='Sold Out', value="`{}`".format(goatData["isSoldOut"]))
-                        embed.add_field(name='Next Pre Start Time', value="`{}`".format(nextPreStartTime))
-                        embed.post()
+                        embed1 = Webhook(webhook, color=123123)
+                        embed1.set_author(name='Goat Surprise Monitor', icon="https://i.imgur.com/GIOTCug.jpg")
+                        embed1.set_thumbnail(url=goatData["product"]["pictureUrl"])
+                        embed1.set_title(title=goatData["product"]["name"], url=productUrl)
+                        embed1.set_desc("The next drop usually occurs **10 minutes** after `Next Pre Start Time`.\nNext product is announced at `Next Pre Start Time`.\nClick [this]({}) to access product from website, (**Disclaimer:** Will not work on apparel).".format(productUrl))
+                        embed1.add_field(name='Sold Out', value="`{}`".format(goatData["isSoldOut"]))
+                        embed1.add_field(name='Next Pre Start Time', value="`{}`".format(nextPreStartTime))
+                        embed1.post()
                 except KeyError:
                     pass
-            else:
-                pass
     time.sleep(5)
